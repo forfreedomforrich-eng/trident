@@ -183,49 +183,32 @@ The following show an example of a managed volume and an unmanaged volume import
 
 .Managed volume
 --
-For managed volumes, Trident renames the FlexVol volume to the `pvc-<uuid>` format and the LUN within the FlexVol volume to `lun0`.
 
 NOTE: Post first LUN inside toimport is imported the flexvol will be renamed and in the subsequent import LUNs(LUNs inside same flexvol) import statement should use the newly renamed flexvol name.
 
 
-The following example imports the `ontap-san-managed` FlexVol volume that is present on the `ontap_san_default` backend:
+The following example imports the `vol-managed-saneco` san-economy volume that is present on the LUN `toimport/lun1`:
 ----
-tridentctl import volume BackendForiSCSIEco toimport/lunFoo -f import1.yaml
-
-+------------------------------------------+--------+---------------+----------+--------------------------------------+--------+---------+
-|                   NAME                   |  SIZE  | STORAGE CLASS | PROTOCOL |             BACKEND UUID             | STATE  | MANAGED |
-+------------------------------------------+--------+---------------+----------+--------------------------------------+--------+---------+
-| pvc-d6ee4f54-4e40-4454-92fd-d00fc228d74a | 20 MiB | basic         | block    | cd394786-ddd5-4470-adc3-10c5ce4ca757 | online | true    |
-+------------------------------------------+--------+---------------+----------+--------------------------------------+--------+---------+
+tridentctl import volume vol-managed-saneco toimport/lun1 -f import1.yaml
 ----
 
-
-NOTE: Post first LUN inside toimport is imported, the flexvol is renamed. In the subsequent import LUNs(LUNs inside same flexvol), the import statement should use the newly renamed flexvol name.
-For example, if the second LUN (lun2) previously inside toimport which would be changed say trident_lun_pool_xyz import statement will change to:
+NOTE: After the first LUN inside toimport is imported, the flexvol is renamed. In the subsequent import, the LUNs(LUNs inside same flexvol) import statement should use the newly renamed flexvol name.
+For example, if the second LUN (lun2) previously inside toimport which would be changed (e.g, trident_lun_pool_xyz), the import statement will change to:
 
 ----
-trident import volume BackendForiSCSIEco trident_lun_pool_xyz/lun2 -f import2.yaml
+trident import volume vol-managed-saneco trident_lun_pool_xyz/lun2 -f import2.yaml
 ----
+LUNs in the ontap-san-economy backend are imported one LUN at a time, which can be automated using a script.
 
 --
 .Unmanaged volume
 --
-The following example imports `unmanaged_example_volume` on the `ontap_san` backend:
-----
-tridentctl import volume -n trident san_blog unmanaged_example_volume -f pvc-import.yaml --no-manage
-+------------------------------------------+---------+---------------+----------+--------------------------------------+--------+---------+
-|                   NAME                   |  SIZE   | STORAGE CLASS | PROTOCOL |             BACKEND UUID             | STATE  | MANAGED |
-+------------------------------------------+---------+---------------+----------+--------------------------------------+--------+---------+
-| pvc-1fc999c9-ce8c-459c-82e4-ed4380a4b228 | 1.0 GiB | san-blog      | block    | e3275890-7d80-4af6-90cc-c7a0759f555a | online | false   |
-+------------------------------------------+---------+---------------+----------+--------------------------------------+--------+---------+
-----
-[WARNING]
-=====
-If you have LUNS mapped to igroups that share an IQN with a Kubernetes node IQN, as shown in the following example, you will receive the error: `LUN already mapped to initiator(s) in this group`. You will need to remove the initiator or unmap the LUN to import the volume. 
+For unmanaged import, the flexVol should be named in this format: `"trident_lun_pool_" + backend_config.get("storagePrefix", "trident_").rstrip("_") + "_any_random_string"` and the LUN should be named lun0 to adhere to trident naming conventions
+If a storagePrefix is `xyz`, the flexvol name for unmanaged import looks like this: `trident_lun_pool_xyz_randomstring`
+Full path to the LUN is: trident_lun_pool_xyz_randomstring/lun0 
+--
 
-image:./san-import-igroup.png[Image of LUNS mapped to iqn and cluster iqn.]
-
-=====
+====
 
 === Element
 Trident supports NetApp Element software and NetApp HCI volume import using the `solidfire-san` driver. 
