@@ -173,39 +173,54 @@ image:./san-import-igroup.png[Image of LUNS mapped to iqn and cluster iqn.]
 --
 ====
 
-.ONTAP SAN-economy examples
-The following show an example of a managed volume and an unmanaged volume import for the `ontap-san-economy` backend.
+== ONTAP SAN-economy examples
 
-// start tabbed area
+The following examples show how to import managed and unmanaged volumes for the `ontap-san-economy` backend.
 
 [role="tabbed-block"]
 ====
 
 .Managed volume
 --
+When you import a managed volume, Trident takes ownership of the FlexVol and renames it. You must account for this renaming when you import multiple LUNs from the same FlexVol.
 
-NOTE: Post first LUN inside toimport is imported the flexvol will be renamed and in the subsequent import LUNs(LUNs inside same flexvol) import statement should use the newly renamed flexvol name.
+The following example imports `lun1` from the FlexVol `toimport` as a managed volume named `vol-managed-saneco`:
 
-
-The following example imports the `vol-managed-saneco` san-economy volume that is present on the LUN `toimport/lun1`:
 ----
 tridentctl import volume vol-managed-saneco toimport/lun1 -f import1.yaml
 ----
 
-NOTE: After the first LUN inside toimport is imported, the flexvol is renamed. In the subsequent import, the LUNs(LUNs inside same flexvol) import statement should use the newly renamed flexvol name.
-For example, if the second LUN (lun2) previously inside toimport which would be changed (e.g, trident_lun_pool_xyz), the import statement will change to:
+After importing `lun1`, Trident renames the FlexVol (for example, to `trident_lun_pool_xyz`). To import additional LUNs from the same FlexVol, use the new FlexVol name:
 
 ----
-trident import volume vol-managed-saneco trident_lun_pool_xyz/lun2 -f import2.yaml
+tridentctl import volume vol-managed-saneco trident_lun_pool_xyz/lun2 -f import2.yaml
 ----
-LUNs in the ontap-san-economy backend are imported one LUN at a time, which can be automated using a script.
 
+NOTE: The `ontap-san-economy` backend imports one LUN at a time. You can automate multiple imports using a script.
 --
+
 .Unmanaged volume
 --
-For unmanaged import, the flexVol should be named in this format: `"trident_lun_pool_" + backend_config.get("storagePrefix", "trident_").rstrip("_") + "_any_random_string"` and the LUN should be named lun0 to adhere to trident naming conventions
-If a storagePrefix is `xyz`, the flexvol name for unmanaged import looks like this: `trident_lun_pool_xyz_randomstring`
-Full path to the LUN is: trident_lun_pool_xyz_randomstring/lun0 
+When you import an unmanaged volume, Trident does not take ownership of the FlexVol. However, the FlexVol and LUN must follow Trident naming conventions.
+
+FlexVol naming format::
++
+----
+trident_lun_pool_STORAGEPREFIX_RANDOMSTRING
+----
++
+* `STORAGEPREFIX` is the value of `storagePrefix` in your backend configuration. The default is `trident`.
+* `RANDOMSTRING` is any string you choose.
+
+LUN naming requirement::
+The LUN must be named `lun0`.
+
+Example::
+If your `storagePrefix` is `xyz`, the full path to the LUN is:
++
+----
+trident_lun_pool_xyz_randomstring/lun0
+----
 --
 
 ====
