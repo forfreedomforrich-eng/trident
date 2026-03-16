@@ -57,10 +57,6 @@ entries:
         url: /trident-use/trident-fsx-storage-backend.html
       - title: Configure automatic backend configuration
         url: /trident-use/trident-fsx-auto-backend-configuration.html
-      - title: Create an Autogrow Policy
-        url: /trident-use/automatic-volume-expansion.html
-      - title: Manage an Autogrow Policy 
-        url: /trident-use/create-autogrow-policy.html
       - title: Configure storage class and PVC
         url: /trident-use/trident-fsx-storageclass-pvc.html
       - title: Deploy sample application
@@ -95,6 +91,10 @@ entries:
       url: /trident-use/controller-scalability.html
     - title: Automatic volume expansion
       url: /trident-use/automatic-volume-expansion.html
+    - title: Create an Autogrow Policy
+      url: /trident-use/automatic-volume-expansion.html
+    - title: Manage an Autogrow Policy 
+      url: /trident-use/create-autogrow-policy.html
     - title: Import volumes
       url: /trident-use/vol-import.html
     - title: Customize volume names
