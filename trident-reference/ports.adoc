@@ -116,7 +116,7 @@ These ports are for CSI node daemonsets and pod mounts. Data ports are outbound 
 | Outbound
 | RPCBIND/portmapper
 | ONTAP-NAS (NFSv3/v4), ANF (NFS)
-| Required for v3; optional for v4 (firewall offload); restrict if using -only.
+| Required for v3; optional for v4 (firewall offload); restrict if using NFSv4-only.
 
 | TCP/UDP 2049
 | Outbound
