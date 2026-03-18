@@ -188,15 +188,15 @@ Ensure the following prerequisites are met:
 ** Refer to the https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html[AWS documentation^] for more information about credentials with AWS resources.
 
 .Steps
-. ##Verify that the AppVault CR exists on the destination cluster using the Trident Protect CLI plugin:##
+. Verify that the AppVault CR exists on the destination cluster using the Trident Protect CLI plugin:
 +
 [source,console]
 ----
 tridentctl-protect get appvault --context <destination_cluster_name>
 ----
 +
-NOTE: Ensure that the namespace intended for the application restore exists on the destination cluster. ##If the AppVault CR does not exist on the destination cluster, create it by following the steps in link:trident-protect-appvault-custom-resources.html[Use Trident Protect AppVault objects to manage buckets].##
-. ##View the backup contents of the available AppVault on the destination cluster, and note `appArchivePath` of the backup you want to restore:##
+NOTE: If the AppVault CR does not exist on the destination cluster, create it by following the steps in link:trident-protect-appvault-custom-resources.html[Use Trident Protect AppVault objects to manage buckets].
+. View the backup contents of the available AppVault on the destination cluster, and note `appArchivePath` of the backup you want to restore:
 +
 [source,console]
 ----
@@ -225,6 +225,8 @@ Running this command displays the available backups in the AppVault, including t
 ====
 .Use a CR
 --
+NOTE: Ensure that the namespace intended for the application restore exists on the destination cluster.
+
 [start=4]
 . Create the custom resource (CR) file and name it `trident-protect-backup-restore-cr.yaml`.
 . In the file you created, configure the following attributes:
