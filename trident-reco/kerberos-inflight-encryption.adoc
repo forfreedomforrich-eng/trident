@@ -15,7 +15,7 @@ Using Kerberos in-flight encryption, you can improve data access security by ena
 
 Trident supports Kerberos encryption for ONTAP as a storage backend:
 
-* *On-premise ONTAP* - Trident supports Kerberos encryption over NFSv3 and NFSv4 connections from Red Hat OpenShift and upstream Kubernetes clusters to on-premise ONTAP volumes.
+* *On-premise ONTAP* - Trident supports Kerberos encryption over NFSv3 and  connections from Red Hat OpenShift and upstream Kubernetes clusters to on-premise ONTAP volumes.
 
 You can create, delete, resize, snapshot, clone, read-only clone, and import volumes that use NFS encryption.
 
@@ -30,13 +30,13 @@ NOTE: Kerberos encryption for NFS traffic with on-premise ONTAP storage backends
 * Ensure you have administrator access to the ONTAP storage backend.
 * Ensure you know the name of the volume or volumes you will be sharing from the ONTAP storage backend.
 * Ensure that you have prepared the ONTAP storage VM to support Kerberos encryption for NFS volumes. Refer to https://docs.netapp.com/us-en/ontap/nfs-config/create-kerberos-config-task.html[Enable Kerberos on a dataLIF^] for instructions.
-* Ensure that any NFSv4 volumes you use with Kerberos encryption are configured correctly. Refer to the NetApp NFSv4 Domain Configuration section (page 13) of the https://www.netapp.com/media/16398-tr-3580.pdf[NetApp NFSv4 Enhancements and Best Practices Guide^]. 
+* Ensure that any  volumes you use with Kerberos encryption are configured correctly. Refer to the NetApp  Domain Configuration section (page 13) of the https://www.netapp.com/media/16398-tr-3580.pdf[NetApp  Enhancements and Best Practices Guide^]. 
 
 === Add or modify ONTAP export policies
 You need to add rules to existing ONTAP export policies or create new export polices that support Kerberos encryption for the ONTAP storage VM root volume as well as any ONTAP volumes shared with the upstream Kubernetes cluster. The export policy rules you add, or new export policies you create, need to support the following access protocols and access permissions:
 
 .Access protocols
-Configure the export policy with NFS, NFSv3, and NFSv4 access protocols.
+Configure the export policy with NFS, NFSv3, and  access protocols.
 
 .Access details
 You can configure one of three different versions of Kerberos encryption, depending on your needs for the volume:
@@ -199,7 +199,7 @@ You can enable Kerberos encryption on the storage traffic between your managed c
 * Ensure that you have enabled Trident on the managed Red Hat OpenShift cluster.
 * Ensure that you have access to the `tridentctl` utility.
 * Ensure that you have prepared the Azure NetApp Files storage backend for Kerberos encryption by noting the requirements and following the instructions in https://learn.microsoft.com/en-us/azure/azure-netapp-files/configure-kerberos-encryption[Azure NetApp Files documentation^].
-* Ensure that any NFSv4 volumes you use with Kerberos encryption are configured correctly. Refer to the NetApp NFSv4 Domain Configuration section (page 13) of the https://www.netapp.com/media/16398-tr-3580.pdf[NetApp NFSv4 Enhancements and Best Practices Guide^]. 
+* Ensure that any  volumes you use with Kerberos encryption are configured correctly. Refer to the NetApp  Domain Configuration section (page 13) of the https://www.netapp.com/media/16398-tr-3580.pdf[NetApp  Enhancements and Best Practices Guide^]. 
 
 === Create a storage backend
 You can create an Azure NetApp Files storage backend configuration that includes Kerberos encryption capability. 
