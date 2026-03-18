@@ -206,7 +206,7 @@ NOTE: This feature is experimental and currently supports limited parallel workf
 * *Kubernetes*:
 ** Fixed an issue with CSI NodeExpandVolume where multipath devices could be left with incongruent sizes when underlying SCSI disk(s) are unavailable.
 ** Fixed failure to clean up duplicate export policies for ONTAP-NAS and ONTAP-NAS-Economy drivers.
-** Fixed GCNV volumes defaulting to NFSv3 when `nfsMountOptions` is unset; now both NFSv3 and NFSv4 protocols are supported. If `nfsMountOptions` is not provided, the host’s default NFS version (NFSv3 or NFSv4) will be used.
+** Fixed GCNV volumes defaulting to NFSv3 when `nfsMountOptions` is unset; now both NFSv3 and NFSv4 protocols are supported. If `nfsMountOptions` is not provided, the host’s default NFS version (NFSv3 or NFSv4) are used.
 ** Fixed deployment issue when installing Trident using Kustomize (link:https://github.com/NetApp/trident/issues/831[Issue #831]).
 ** Fixed missing export policies for PVCs created from snapshots (link:https://github.com/NetApp/trident/issues/1016[Issue #1016]).
 ** Fixed issue where the ANF volume sizes are not automatically aligned to 1 GiB increments.

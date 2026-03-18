@@ -193,8 +193,7 @@ For more information, refer to: link:../trident-reco/security-reco.html[How Trid
 
 |`unixPermissions`	|Mode for new volumes	|"777" for NFS volumes; empty (not applicable) for SMB volumes
 
-|`snapshotDir` |Controls access to the `.snapshot` directory |"true" for NFSv4
-"false" for NFSv3
+|`snapshotDir` |Controls access to the `.snapshot` directory |`true`, `false` (Set explicitly).
 
 |`exportPolicy` |Export policy to use |"default"
 
@@ -670,7 +669,7 @@ parameters:
   selector: "app=mysqldb"
   fsType: "ext4"
 ----
-* TThe `protection-silver-creditpoints-20k` StorageClass will map to the third virtual pool in the `ontap-nas-flexgroup` backend. This is the only pool offering silver-level protection and 20000 creditpoints.
+* The `protection-silver-creditpoints-20k` StorageClass will map to the third virtual pool in the `ontap-nas-flexgroup` backend. This is the only pool offering silver-level protection and 20000 creditpoints.
 +
 [source,yaml]
 ----

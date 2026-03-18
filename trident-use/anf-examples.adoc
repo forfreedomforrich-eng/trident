@@ -139,9 +139,7 @@ Refer to <<Example configurations>> for details.
 
 Ignored for SMB volumes. |"0.0.0.0/0"
 
-|`snapshotDir` |Controls visibility of the .snapshot directory |"true" for NFSv4
-"false" for NFSv3
-
+|`snapshotDir` |Access to the `.snapshot` directory |`true`, `false` (Set explicitly).
 |`size` |The default size of new volumes |"100G"
 
 |`unixPermissions` |The unix permissions of new volumes (4 octal digits).
