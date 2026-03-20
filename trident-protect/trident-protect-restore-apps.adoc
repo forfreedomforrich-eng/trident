@@ -220,20 +220,20 @@ Running this command displays the available backups in the AppVault, including t
 ----
 . Restore the application to the destination cluster using the AppVault name and archive path:
 
+NOTE: Ensure that the namespace intended for the application restore exists on the destination cluster.
+
 // begin tabbed block
 [role="tabbed-block"]
 ====
 .Use a CR
 --
-NOTE: Ensure that the namespace intended for the application restore exists on the destination cluster.
-
 [start=4]
 . Create the custom resource (CR) file and name it `trident-protect-backup-restore-cr.yaml`.
 . In the file you created, configure the following attributes:
 +
 * *metadata.name*: (_Required_) The name of this custom resource; choose a unique and sensible name for your environment.
 * *spec.appVaultRef*: (_Required_) The name of the AppVault where the backup contents are stored.
-* *spec.appArchivePath*: ##(_Required_) The path inside AppVault where the backup contents are stored. Use the command from step 2 to view the backup contents and find `appArchivePath` for the backup you want to restore.##
+* *spec.appArchivePath*: (_Required_) The path inside AppVault where the backup contents are stored. Use the command from step 2 to view the backup contents and find `appArchivePath` for the backup you want to restore.
 +
 * *spec.destinationApplicationName*: (_Optional_) The name for the restored application. If provided, the restored application uses this name. If not provided, the restored application uses the source application name.
 * *spec.namespaceMapping*: The mapping of the source namespace of the restore operation to the destination namespace. Replace `my-source-namespace` and `my-destination-namespace` with information from your environment.
