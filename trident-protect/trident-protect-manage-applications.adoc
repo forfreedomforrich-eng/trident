@@ -83,6 +83,7 @@ spec:
 . (_Optional_) If needed, you can add resource filtering to the same CR to include or exclude specific resources:
 +
 *Generic filter example:*
++
 * *resourceFilter.resourceSelectionCriteria*: (Required for filtering) Use `Include` or `Exclude` to include or exclude a resource defined in resourceMatchers. Add the following resourceMatchers parameters to define the resources to be included or excluded:
 ** *resourceFilter.resourceMatchers*: An array of resourceMatcher objects. If you define multiple elements in this array, they match as an OR operation, and the fields inside each element (group, kind, version) match as an AND operation.
 *** *resourceMatchers[].group*: (_Optional_) Group of the resource to be filtered.
