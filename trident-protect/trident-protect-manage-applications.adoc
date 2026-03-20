@@ -82,10 +82,10 @@ spec:
 
 . (_Optional_) If needed, you can add resource filtering to the same CR to include or exclude specific resources:
 +
-*Generic filter example:*
+* *Generic filter example:*
 +
-* *resourceFilter.resourceSelectionCriteria*: (Required for filtering) Use `Include` or `Exclude` to include or exclude a resource defined in resourceMatchers. Add the following resourceMatchers parameters to define the resources to be included or excluded:
-** *resourceFilter.resourceMatchers*: An array of resourceMatcher objects. If you define multiple elements in this array, they match as an OR operation, and the fields inside each element (group, kind, version) match as an AND operation.
+** *resourceFilter.resourceSelectionCriteria*: (Required for filtering) Use `Include` or `Exclude` to include or exclude a resource defined in resourceMatchers. Add the following resourceMatchers parameters to define the resources to be included or excluded:
+*** *resourceFilter.resourceMatchers*: An array of resourceMatcher objects. If you define multiple elements in this array, they match as an OR operation, and the fields inside each element (group, kind, version) match as an AND operation.
 *** *resourceMatchers[].group*: (_Optional_) Group of the resource to be filtered.
 *** *resourceMatchers[].kind*: (_Optional_) Kind of the resource to be filtered.
 *** *resourceMatchers[].version*: (_Optional_) Version of the resource to be filtered.
@@ -116,8 +116,8 @@ spec:
         namespaces: ["my-resource-namespaces"]
         labelSelectors: ["trident.netapp.io/os=linux"]
 ----
-+
-##*PVC-only filter example:*##
+
+* ##*PVC-only filter example:*##
 +
 ##To define a PVC-only application, you must also include `PersistentVolume` and `VolumeSnapshotClass` in the resource filter. Snapshot and backup operations depend on `PersistentVolume` (the cluster-scoped volume bound to each PVC) and `VolumeSnapshotClass` (the snapshot driver), and will fail without them. For example:##
 +
