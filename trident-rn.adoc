@@ -90,7 +90,7 @@ Two workarounds are available:
 * Fixed snapshot and backup failures caused by resource filters that excluded persistent volumes.
 * Fixed incorrect PVC restoration in multi-namespace applications with identically named PVCs across namespaces, which could result in data loss.
 
-== What's new in 26.02
+== What's new in 25.10
 Learn what's new in Trident and Trident Protect, including enhancements, fixes, and deprecations.
 
 === Trident
