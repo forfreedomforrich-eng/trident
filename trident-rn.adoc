@@ -16,6 +16,80 @@ Release Notes provide information about new features, enhancements, and bug fixe
 WARNING: The `tridentctl` binary for Linux that is provided in the installer zip file is the tested and supported version. Be aware that the `macos` binary provided in the `/extras` part of the zip file is not tested or supported.
 
 
+== What's new in 26.02
+Learn what's new in NetApp Trident and Trident Protect, including enhancements, fixes, and deprecations.
+
+=== Trident
+
+==== Enhancements
+
+* *Kubernetes*:
+
+** Added general availability (GA) support for concurrency for ONTAP-NAS (NFS only), ONTAP-SAN (iSCSI, FCP, NVMe), and Google Cloud NetApp Volumes (GCNV) drivers, graduating this functionality from Tech Preview. See the link:https://docs.netapp.com/us-en/trident/trident-use/controller-scalability.html[Controller scalability documentation] for more information.
+** Added support for volume autogrow in Trident based on custom, user-defined Trident AutoGrow policies. See the link:https://docs.netapp.com/us-en/trident/trident-use/automatic-volume-expansion.html[Automatic volume expansion documentation] for more information.
+** Enhanced Trident node concurrency to improve the scalability of node operations for NVMe volumes. See the link:https://docs.netapp.com/us-en/trident/trident-use/trident-nvme-rwx-subsystem-limits.html[NVMe volumes documentation] for more information.
+** Added support for GCNV NAS volume auto-tiering through PVC annotations (`tieringPolicy`, `tieringMinimumCoolingDays`), including pool selection and clone inheritance. See the link:https://docs.netapp.com/us-en/trident/trident-use/gcnv-auto-tiering.html[Configure auto-tiering for Google Cloud NetApp Volumes documentation] for more information.
+** Added support for GCNV SAN block (iSCSI) volumes using the `google-cloud-netapp-volumes-san` driver, including provisioning, per-node host group mapping for LUN access, and clone-from-volume operations. See the link:https://docs.netapp.com/us-en/trident/trident-use/gcnv-block.html[Google Cloud NetApp Volumes block configuration documentation] for more information.
+** Added support for automatic backend configuration for Amazon FSx for NetApp ONTAP. When you create a StorageClass that includes the required parameters, Trident automatically creates the corresponding backend and VolumeSnapshotClass, if needed. See the link:https://docs.netapp.com/us-en/trident/trident-use/trident-fsx-auto-backend-configuration.html#add-additional-fsxn-file-systems[Amazon FSx for NetApp ONTAP backend configuration documentation] for more information.
+** Added support for different Microsoft Azure clouds, such as Azure Government and Azure China, and custom cloud configuration for Azure NetApp Files backends. See the link:https://docs.netapp.com/us-en/trident/trident-use/anf.html[Azure NetApp Files backend configuration documentation] for more information.
+** Added support for Kubernetes 1.35. See the link:https://docs.netapp.com/us-en/trident/trident-get-started/requirements.html[Requirements documentation] for more information.
+
+==== Experimental Enhancements
+
+NOTE: Not for use in production environments.
+
+* *[Tech Preview]*: Added support for concurrency for ONTAP-NAS-Economy and ONTAP-SAN-Economy drivers.
+
+==== Known issues
+
+[WARNING]
+====
+There is a known issue with the `csi-snapshotter` sidecar. In all Kubernetes versions, VolumeGroupSnapshots `v1beta1` prevents VolumeSnapshots from reaching the `ReadyToUse` state.
+====
+
+Two workarounds are available:
+
+. Delete the VolumeGroupSnapshots CRDs to disable VolumeGroupSnapshots, and then reinstall Trident.
+
+. Install VolumeGroupSnapshots `v1beta2` and `snapshot-controller` version 8.4.0 or later, and then reinstall Trident. VolumeGroupSnapshots do not function on Kubernetes versions earlier than v1.34.
+
+==== Fixes
+
+* *Kubernetes*:
+
+** Fixed an issue where unpublishing a read-only clone removed export policy rules from the source volume in ONTAP-NAS, ONTAP-NAS-Economy, and Google Cloud NetApp Volumes drivers link:https://github.com/NetApp/trident/issues/1086[Issue #1086].
+** Switched kubectl images to lightweight Alpine-based variants to prevent pull failures following Bitnami's public image deprecation https://github.com/NetApp/trident/issues/1080[Issue #1080].
+** Fixed preserving annotation of existing deployment during Trident upgrade link:https://github.com/NetApp/trident/issues/1004[Issue #1004].
+** Allow clone across different storage classes if both storage classes are pointing to the same backend link:https://github.com/NetApp/trident/issues/1104[Issue #1104].
+** Fixed node prep failures caused by timeouts in cloud environments with network latencies. Increased timeout values for cloud-based installations.
+** Fixed an issue in LUN creation that caused the filesystem type attribute to remain unset when the process entered a retry state.
+** Fixed REST API volume lookup to ignore volume state, preventing false negatives during volume queries.
+** Improved Trident controller efficiency for ontap-nas-economy driver when used at scale.
+** Set internalID during LUN import in ontap-san-economy driver.
+** Increased Azure Resource Graph query limits to handle more subnets.
+** Improved CSI and ONTAP clone split timeouts to avoid race conditions with some backup applications link:https://github.com/NetApp/trident/issues/1098[Issue #1098], link:https://github.com/NetApp/trident/issues/1100[Issue #1100].
+** Fixed suppression of LUKS error messages link:https://github.com/NetApp/trident/issues/1069[Issue #1069].
+** Fixed handling of stale LUKS mappers for both iSCSI and NVMe protocols. Enhanced cleanup logic prevents mount failures from orphaned device mappers.
+* Fixed scale limitations for RWX NVMe volumes.
+* Updated the OpenTelemetry-Go package to fix link:https://nvd.nist.gov/vuln/detail/cve-2026-24051[CVE-2026-24051].
+
+=== Trident Protect
+
+==== Enhancements
+
+* Trident Protect now automatically disables protection schedules and cancels in-progress operations before an in-place restore, and re-enables them after the restore completes. To learn more, refer to link:trident-protect/trident-protect-restore-apps.html[Restore applications using Trident Protect^].
+* Added the `runImmediately` field to the schedule CR and `--run-immediately` CLI flag to trigger an immediate backup or snapshot upon schedule creation. To learn more, refer to link:trident-protect/trident-protect-protect-apps.html#create-a-data-protection-schedule[Create a data protection schedule^].
+* Added support for specifying a custom name for the restored application using the `destinationApplicationName` field in the restore CR or the `--destination-app-name` CLI flag. To learn more, refer to link:trident-protect/trident-protect-restore-apps.html[Restore applications using Trident Protect^].
+
+==== Fixes
+
+* Fixed restore failures caused by pods being created before their required service accounts were available.
+* Fixed `Roles` and `RoleBindings` being skipped during application restores.
+* Fixed the originating cluster name not being displayed in `tridentctl-protect get appvaultcontent` output despite being correctly configured.
+* Fixed Kopia restore errors that were ignored due to missing `pipefail` handling.
+* Fixed snapshot and backup failures caused by resource filters that excluded persistent volumes.
+* Fixed incorrect PVC restoration in multi-namespace applications with identically named PVCs across namespaces, which could result in data loss.
+
 == What's new in 25.10
 Learn what's new in Trident and Trident Protect, including enhancements, fixes, and deprecations.
 
@@ -34,7 +108,7 @@ Learn what's new in Trident and Trident Protect, including enhancements, fixes, 
 ** Added an option `--no-rename` when importing a volume to retain the original name but let Trident manage the volume's lifecycle. See link:https://docs.netapp.com/us-en/trident/trident-use/vol-import.html[Import volumes^].
 ** Trident deployment now runs at the system-cluster-critical priority class. 
 * Added an option for Trident controller to use host networking via helm, operator, and tridentctl (link:https://github.com/NetApp/trident/issues/858[Issue #858]).
-* Added manual QoS support to the ANF driver, making it production-ready in Trident 25.10; this experimental enhancement was introduced in Trident 25.06.
+* Added manual QoS support to the ANF driver, making it production-ready in Trident 26.02; this experimental enhancement was introduced in Trident 25.06.
 
 ==== Experimental Enhancements
 NOTE: Not for use in production environments.
@@ -85,7 +159,7 @@ See link:https://docs.netapp.com/us-en/trident/trident-protect/trident-protect-p
 
 === Trident
 
-IMPORTANT: For customers using SolidFire, please do not upgrade to 25.06.1 due to a known issue when unpublishing volumes. 25.06.2 will be released soon to address this issue.
+IMPORTANT: For customers using SolidFire, do not upgrade to 25.06.1 due to a known issue when unpublishing volumes. 25.06.2 will be released soon to address this issue.
 
 ==== Fixes
 
@@ -132,7 +206,7 @@ NOTE: This feature is experimental and currently supports limited parallel workf
 * *Kubernetes*:
 ** Fixed an issue with CSI NodeExpandVolume where multipath devices could be left with incongruent sizes when underlying SCSI disk(s) are unavailable.
 ** Fixed failure to clean up duplicate export policies for ONTAP-NAS and ONTAP-NAS-Economy drivers.
-** Fixed GCNV volumes defaulting to NFSv3 when `nfsMountOptions` is unset; now both NFSv3 and NFSv4 protocols are supported. If `nfsMountOptions` is not provided, the host’s default NFS version (NFSv3 or NFSv4) will be used.
+** Fixed GCNV volumes defaulting to NFSv3 when `nfsMountOptions` is unset; now both NFSv3 and NFSv4 protocols are supported. If `nfsMountOptions` is not provided, the host’s default NFS version (NFSv3 or NFSv4) are used.
 ** Fixed deployment issue when installing Trident using Kustomize (link:https://github.com/NetApp/trident/issues/831[Issue #831]).
 ** Fixed missing export policies for PVCs created from snapshots (link:https://github.com/NetApp/trident/issues/1016[Issue #1016]).
 ** Fixed issue where the ANF volume sizes are not automatically aligned to 1 GiB increments.

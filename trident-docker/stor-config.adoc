@@ -173,8 +173,10 @@ a|`777`
 
 |`snapshotDir`
 a|NAS option for access to the `.snapshot` directory.
-a|"true" for NFSv4
-"false" for NFSv3
+a|Enables or disables access to the `.snapshot` directory.
+
+Valid values: `true`, `false`.
+Default behavior might vary by ONTAP and Trident version. Set explicitly to ensure consistent behavior.
 
 |`exportPolicy`
 a|NAS option for the NFS export policy to use, defaults to `default`
