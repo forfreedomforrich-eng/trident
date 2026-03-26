@@ -42,6 +42,7 @@ This applies to the following environments:
 * Google Kubernetes Engine (GKE)
 * Google Cloud NetApp Volumes NAS pools
 * NFS and SMB workloads
+* Red Hat OpenShift
 
 For block (iSCSI) workloads, see
 xref:trident-use/gcnv-block.html[Configure block storage (iSCSI)].
