@@ -39,10 +39,9 @@ require block-level access or application-managed I/O behavior.
 This applies to the following environments:
 
 * Trident 26.02 and later
-* Google Kubernetes Engine (GKE)
+* Google Kubernetes Engine (GKE) or Red Hat OpenShift
 * Google Cloud NetApp Volumes NAS pools
 * NFS and SMB workloads
-* Red Hat OpenShift
 
 For block (iSCSI) workloads, see
 xref:trident-use/gcnv-block.html[Configure block storage (iSCSI)].
