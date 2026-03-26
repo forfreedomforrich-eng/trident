@@ -34,10 +34,15 @@ Trident supports controller scalability with different maturity levels depending
 
 The following drivers support controller scalability at general availability in Trident 26.02:
 
-* `san`
-* `nas`
-* `san-nvme`
+* `ontap-san`
+* `ontap-nas`
 * `google-cloud-netapp-volumes`
+
+[NOTE]
+====
+The `google-cloud-netapp-volumes` and `google-cloud-netapp-volumes-san` drivers are different. 
+Only `google-cloud-netapp-volumes` is supported. Do not use `google-cloud-netapp-volumes-san` in backend configurations or examples.
+====
 
 
 == Enable controller scalability

@@ -28,10 +28,10 @@ Before configuring automatic volume expansion, ensure that the following require
 * Role-based access control permissions to create `TridentAutogrowPolicy` custom resources
 * StorageClasses configured with `allowVolumeExpansion: true`
 * Supported ONTAP protocols:
-** Network File System
-** Internet Small Computer Systems Interface
-** Fibre Channel Protocol
-** Non-Volatile Memory Express over Fabrics
+** Network File System (NFS)
+** Internet Small Computer Systems Interface (iSCSI)
+** Fibre Channel Protocol (NVMe)
+** Non-Volatile Memory Express over Fabrics (FCP)
 
 == Limitations
 
@@ -40,10 +40,10 @@ Before configuring automatic volume expansion, ensure that the following require
 * In brownfield environments, automatic expansion might not function for certain existing volumes due to volume publication migration behavior.
 * When a volume reaches `maxSize`, no further expansion occurs.
 * Supported protocols for automatic volume expansion:
-** Network File System
-** Internet Small Computer Systems Interface
-** Fibre Channel Protocol
-** Non-Volatile Memory Express over Fabrics
+** Network File System (NFS)
+** Internet Small Computer Systems Interface (iSCSI)
+** Fibre Channel Protocol (NVMe)
+** Non-Volatile Memory Express over Fabrics (FCP)
 
 == Provision Volumes with Autogrow Policy
 
