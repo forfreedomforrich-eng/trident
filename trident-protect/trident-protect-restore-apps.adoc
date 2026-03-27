@@ -220,7 +220,7 @@ Running this command displays the available backups in the AppVault, including t
 ----
 . Restore the application to the destination cluster using the AppVault name and archive path:
 
-NOTE: Ensure that the namespace intended for the application restore exists on the destination cluster.
+NOTE: When using a CR, ensure that the namespace intended for the application restore exists on the destination cluster.
 
 // begin tabbed block
 [role="tabbed-block"]
