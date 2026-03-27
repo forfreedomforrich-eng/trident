@@ -90,7 +90,7 @@ Two workarounds are available:
 * Fixed snapshot and backup failures caused by resource filters that excluded persistent volumes.
 * Fixed incorrect PVC restoration in multi-namespace applications with identically named PVCs across namespaces, which could result in data loss.
 
-== What's new in 26.02
+== What's new in 25.10
 Learn what's new in Trident and Trident Protect, including enhancements, fixes, and deprecations.
 
 === Trident
@@ -108,7 +108,7 @@ Learn what's new in Trident and Trident Protect, including enhancements, fixes, 
 ** Added an option `--no-rename` when importing a volume to retain the original name but let Trident manage the volume's lifecycle. See link:https://docs.netapp.com/us-en/trident/trident-use/vol-import.html[Import volumes^].
 ** Trident deployment now runs at the system-cluster-critical priority class. 
 * Added an option for Trident controller to use host networking via helm, operator, and tridentctl (link:https://github.com/NetApp/trident/issues/858[Issue #858]).
-* Added manual QoS support to the ANF driver, making it production-ready in Trident 26.02; this experimental enhancement was introduced in Trident 25.06.
+* Added manual QoS support to the ANF driver, making it production-ready in Trident 25.10; this experimental enhancement was introduced in Trident 25.06.
 
 ==== Experimental Enhancements
 NOTE: Not for use in production environments.
@@ -206,7 +206,7 @@ NOTE: This feature is experimental and currently supports limited parallel workf
 * *Kubernetes*:
 ** Fixed an issue with CSI NodeExpandVolume where multipath devices could be left with incongruent sizes when underlying SCSI disk(s) are unavailable.
 ** Fixed failure to clean up duplicate export policies for ONTAP-NAS and ONTAP-NAS-Economy drivers.
-** Fixed GCNV volumes defaulting to NFSv3 when `nfsMountOptions` is unset; now both NFSv3 and NFSv4 protocols are supported. If `nfsMountOptions` is not provided, the host’s default NFS version (NFSv3 or NFSv4) will be used.
+** Fixed GCNV volumes defaulting to NFSv3 when `nfsMountOptions` is unset; now both NFSv3 and NFSv4 protocols are supported. If `nfsMountOptions` is not provided, the host’s default NFS version (NFSv3 or NFSv4) are used.
 ** Fixed deployment issue when installing Trident using Kustomize (link:https://github.com/NetApp/trident/issues/831[Issue #831]).
 ** Fixed missing export policies for PVCs created from snapshots (link:https://github.com/NetApp/trident/issues/1016[Issue #1016]).
 ** Fixed issue where the ANF volume sizes are not automatically aligned to 1 GiB increments.

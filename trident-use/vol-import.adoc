@@ -286,6 +286,58 @@ image:./san-import-igroup.png[Image of LUNS mapped to iqn and cluster iqn.]
 --
 ====
 
+== ONTAP SAN-economy examples
+
+The following examples show how to import managed and unmanaged volumes for the `ontap-san-economy` backend.
+
+[role="tabbed-block"]
+====
+
+.Managed volume
+--
+When you import a managed volume, Trident takes ownership of the FlexVol and renames it. You must account for this renaming when you import multiple LUNs from the same FlexVol.
+
+The following example imports `lun1` from the FlexVol `toimport` as a managed volume named `vol-managed-saneco`:
+
+----
+tridentctl import volume vol-managed-saneco toimport/lun1 -f import1.yaml
+----
+
+After importing `lun1`, Trident renames the FlexVol (for example, to `trident_lun_pool_xyz`). To import additional LUNs from the same FlexVol, use the new FlexVol name:
+
+----
+tridentctl import volume vol-managed-saneco trident_lun_pool_xyz/lun2 -f import2.yaml
+----
+
+NOTE: The `ontap-san-economy` backend imports one LUN at a time. You can automate multiple imports using a script.
+--
+
+.Unmanaged volume
+--
+When you import an unmanaged volume, Trident does not take ownership of the FlexVol. However, the FlexVol and LUN must follow Trident naming conventions.
+
+FlexVol naming format::
++
+----
+trident_lun_pool_STORAGEPREFIX_RANDOMSTRING
+----
++
+* `STORAGEPREFIX` is the value of `storagePrefix` in your backend configuration. The default is `trident`.
+* `RANDOMSTRING` is any string you choose.
+
+LUN naming requirement::
+The LUN must be named `lun0`.
+
+Example::
+If your `storagePrefix` is `xyz`, the full path to the LUN is:
++
+----
+trident_lun_pool_xyz_randomstring/lun0
+----
+--
+
+====
+
 === Element
 Trident supports NetApp Element software and NetApp HCI volume import using the `solidfire-san` driver. 
 
