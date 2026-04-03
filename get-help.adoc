@@ -26,6 +26,7 @@ Self-support:: Trident documentation is available for months 25 - 36 from the re
 [cols="1, 1, 1, 1"]
 |===
 |Version | Full support | Limited support | Self-support
+a|link:https://docs.netapp.com/us-en/trident/index.html[26.02^] |February 2026 | February 2027 | February 2028
 a|link:https://docs.netapp.com/us-en/trident/index.html[25.10^] |October 2026 | October 2027 | October 2028
 a|link:https://docs.netapp.com/us-en/trident-2506/index.html[25.06^] |June 2026 | June 2027 | June 2028
 a|link:https://docs.netapp.com/us-en/trident-2502/index.html[25.02^] |February 2026 | February 2027 | February 2028
@@ -41,7 +42,7 @@ a|link:https://docs.netapp.com/us-en/trident-2301/index.html[23.01^] |-- | -- | 
 |===
 
 == Self-support
-For a comprehensive list of troubleshooting articles, Refer to https://kb.netapp.com/Advice_and_Troubleshooting/Cloud_Services/Trident_Kubernetes[NetApp Knowledgebase (login required)^].
+For a comprehensive list of troubleshooting articles, refer to https://kb.netapp.com/Advice_and_Troubleshooting/Cloud_Services/Trident_Kubernetes[NetApp Knowledgebase (login required)^].
 
 == Community support
 There is a vibrant public community of container users (including Trident developers) on our link:https://discord.gg/NetApp[Discord channel^]. This is a great place to ask general questions about the project and discuss related topics with like-minded peers.

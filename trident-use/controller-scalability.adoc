@@ -11,10 +11,7 @@ summary: Understand controller scalability, concurrency behavior, and feature ma
 :imagesdir: ../media/
 
 [.lead]
-Trident introduces controller scalability through improved concurrency across multiple storage drivers.
-Customers can identify which Trident drivers support controller scalability at general availability and which drivers are available as a technical preview in Trident 26.02.
-This enables informed deployment decisions and appropriate risk management for scalable Kubernetes environments.
-
+Trident introduces controller scalability through improved concurrency across multiple storage drivers. Customers can identify which Trident drivers support controller scalability at general availability and which drivers are available as a technical preview in Trident 26.02. This enables informed deployment decisions and appropriate risk management for scalable Kubernetes environments.
 
 == Key concepts and definitions
 
@@ -23,8 +20,7 @@ This enables informed deployment decisions and appropriate risk management for s
 Controller scalability refers to the Trident controller's ability to process multiple storage operations in parallel rather than serializing them behind a single lock.
 These operations include volume creation, deletion, resizing, snapshot creation and deletion, volume publish and unpublish, and backend management.
 
-When controller scalability is enabled, operations on different volumes and backends proceed concurrently.
-This increases throughput and reduces end-to-end operation time in environments with high numbers of concurrent PersistentVolumeClaim and VolumeSnapshot operations.
+When controller scalability is enabled, operations on different volumes and backends proceed concurrently. This increases throughput and reduces end-to-end operation time in environments with high numbers of concurrent PersistentVolumeClaim and VolumeSnapshot operations.
 
 == Controller scalability support
 
@@ -34,10 +30,15 @@ Trident supports controller scalability with different maturity levels depending
 
 The following drivers support controller scalability at general availability in Trident 26.02:
 
-* `san`
-* `nas`
-* `san-nvme`
+* `ontap-san`
+* `ontap-nas`
 * `google-cloud-netapp-volumes`
+
+[NOTE]
+====
+The `google-cloud-netapp-volumes` and `google-cloud-netapp-volumes-san` drivers are different. 
+Only `google-cloud-netapp-volumes` is supported. Do not use `google-cloud-netapp-volumes-san` in backend configurations or examples.
+====
 
 
 == Enable controller scalability

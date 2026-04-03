@@ -56,13 +56,13 @@ spec:
   nodePrep: 
   - iscsi 
   imageRegistry: '' 
-  k8sTimeout: 30 
+  k8sTimeout: 180s 
   namespace: trident 
   silenceAutosupport: false 
 -------
 +
 ====
-* Red Hat Enterprise Linux CoreOS (RHCOS)  does not have iSCSI enabled and configured.  
+* Red Hat Enterprise Linux CoreOS (RHCOS) does not have iSCSI enabled and configured.  
 * You can add the `nodePrep` parameter to configure and enable both iSCSI and Multipath services on all OpenShift worker nodes.
 * Beginning with OpenShift 4.19, the minimum Trident version supported for this feature is 25.06.1.
 ====
