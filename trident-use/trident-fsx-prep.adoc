@@ -1,0 +1,6 @@
+---
+sidebar: sidebar
+permalink: trident-use/trident-fsx-prep.html
+keywords: Amazon FSx for NetApp ONTAP, FSx for ONTAP, trident backend, iam role, secret, preparation
+summary: Before you can configure Amazon FSx for NetApp ONTAP as a backend for Trident, you need to ensure the following requirements are met.
+---
